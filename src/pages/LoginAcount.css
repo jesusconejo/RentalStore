@@ -1,0 +1,32 @@
+.container-login{
+    margin-top: 5%;
+   display: flex;
+   flex-direction: column;   
+   align-items: center;
+   color: aliceblue;
+   
+}
+.formLogin{
+    width: 30vw;
+    display:block;
+    justify-content: center;
+    align-content: center;
+   
+}
+.form-text{
+    color: gray;
+}
+.btn-primary{
+    background-color: rgb(0, 188, 188);
+}
+hr{
+    width: 30%;
+    background-color: rgb(0,0,0, 1);
+    border: solid;
+    height: 3px;
+}
+.nav-link-login{
+    color: blue;
+    margin-top: 10px;
+    
+}

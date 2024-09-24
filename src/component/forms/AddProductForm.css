@@ -1,0 +1,9 @@
+.hr-line{
+    width: 100%;
+    color: blue;
+    height: min-content;
+}
+#img-clip{
+    width: 50px;
+    margin-right: 8px;
+}

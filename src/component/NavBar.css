@@ -1,0 +1,45 @@
+/* Estilos para la barra de navegación */
+.custom-navbar{
+  background-color: rgba(0, 150, 150);
+  border-radius: 5px;
+  height: 6vh; 
+}
+
+.input-buscar{
+  margin-top: 5px;
+  padding: 5px;
+  border: none;
+  border-radius: 7px;
+}
+.nav-link-custom {
+  color: white;
+ 
+  text-decoration: none;
+  font-size: 20px;
+}
+.nav-link-custom:hover{
+  color: bisque;
+}
+.nav-item{
+
+  margin-left: 8px;
+}
+.nav-link{
+ 
+  color: white ;
+
+}
+.nav-link-c:hover{
+  color: bisque;
+}
+.btn-nav{
+  margin-top: 5px;
+  padding: 5px;
+  background-color: rgba(0, 110, 110);
+  color: white;
+  border-radius: 7px;
+  border: none; 
+}
+.btn-nav:hover{
+  background-color: rgba(0, 90, 90);
+}

@@ -1,0 +1,13 @@
+.container-lista{
+  width: 90vw;/* junto con margin-left centramos el container*/
+  display: flex;  
+  margin-left: 5vw;
+  align-items: center;
+}
+
+.actions-container{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    
+}
