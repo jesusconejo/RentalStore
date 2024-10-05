@@ -1,39 +1,84 @@
-import React from 'react'
-import './Productos.css'
-import { CardComponent } from '../component/CardComponent'
+import React, { useEffect, useState } from 'react';
+import { CardComponent } from '../component/CardComponent';
+import { fetchListProduct } from '../functions/productoApi';
+import './Productos.css';
 
 export const Productos = () => {
-  const cardData = [
-    { title: "Rana", text: "Este es un texto sobre la ranaaaaaaaaaaaaaaaaaaaa.", imageUrl: "src/assets/cards/cat_1.jpg" },
-    { title: "Pirata", text: "Este es un texto sobre el gato.", imageUrl: "src/assets/cards/cat_2.jpg" },
-    { title: "Murcielago", text: "Este es un texto sobre el perro.", imageUrl: "src/assets/cards/cat_3.jpg" },
-    { title: "Gato con Botas", text: "Este es un texto sobre el perro.", imageUrl: "src/assets/cards/cat_4.jpg" },
-    { title: "Pirata 2", text: "Este es un texto sobre el perro.", imageUrl: "src/assets/cards/cat_5.jpg" }
-  ];
- 
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);  // Estado para la página actual
+  const itemsPerPage = 10;  // Productos por página
+
+  // Función para mezclar los productos de forma aleatoria
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const handleList = async () => {
+    try {
+      const data = await fetchListProduct();
+      const shuffledData = shuffleArray(data);  // Mezclar los productos de manera aleatoria
+      setProducts(shuffledData);
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
+  };
+
+  useEffect(() => {
+    handleList();
+  }, []);
+
+  // Obtener los productos para la página actual
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Función para cambiar de página
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
   return (
-   
-    <div className='container' >
-     
+    <div className='container-producto'>
       <h4 className='subTitle'>Sugerencias para tu michi</h4>
       <div className='card-grid'>
-      {cardData.map((card, index) => (
-          <CardComponent key={index} title={card.title} text={card.text} imageUrl={card.imageUrl} />
+        {currentProducts.length > 0 ? (
+          currentProducts.map((product) => (
+            <CardComponent 
+              key={product.id}  // Agregar una clave única
+              title={product.name} 
+              text={product.description} 
+              imageUrl={product.imagePath} 
+              stock={product.stock} 
+              precio={product.price} 
+            />
+          ))
+        ) : (
+          <p>No hay productos disponibles</p>
+        )}
+      </div>
+      
+      {/* Paginación */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
-      <hr />
       
-      <h4 className='subTitle'> ¡ De Temporada!</h4>
-      <div className='card-grid'>
-      <CardComponent title="Ejemplo 1" text="Texto de ejemplo 1" imageUrl="src/assets/cards/cat_1.jpg" />
-        <CardComponent title="Ejemplo 2" text="Texto de ejemplo 2" imageUrl="src/assets/cards/cat_2.jpg" />
-        <CardComponent title="Ejemplo 3" text="Texto de ejemplo 3" imageUrl="src/assets/cards/cat_3.jpg" />
-      </div>
-      <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum voluptatum recusandae, non omnis dolorum a dignissimos soluta quos quam dolorem maxime beatae facilis obcaecati, consequuntur accusamus necessitatibus nisi perferendis et.</h2>
-      <h1> Cards de Productos</h1>
-
-
-
+      <hr />
+      <h4 className='subTitle'>¡De Temporada!</h4>
+      <h2>Lorem ipsum dolor sit amet consectetur...</h2>
+      <h1>Cards de Productos</h1>
     </div>
-  )
-}
+  );
+};

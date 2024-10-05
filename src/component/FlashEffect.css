@@ -1,0 +1,21 @@
+.flash-container {
+    position: relative;
+    width: 100vw; /* Ancho completo de la ventana */
+    height: 100vh; /* Alto completo de la ventana */
+    /*overflow: hidden; /* Para evitar el desbordamiento */
+  }
+  
+  .flash {
+    position:relative;
+    width: 100px; /* Tamaño del destello */
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,0,0.99) 0%, rgba(255,0,0,0) 30%);
+    transition: opacity 0.5s ease, transform 0.3s ease; /* Suaviza la animación */
+    transform: scale(0); /* Comienza en tamaño 0 */
+  }
+  
+  .flash[style] {
+    transform: scale(3); /* Expande el destello */
+  }
+  

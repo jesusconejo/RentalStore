@@ -1,15 +1,22 @@
 .container-f{
     background-color: rgb(0,150,150);
-    
+    bottom: 0;
     color: white;
     display:flex;
-    justify-content: center;
-    height: 5vh;
+    justify-content: left;
+    height: 4vh;
+    position:fixed;
+    z-index: 9000;
+    width: 100%;
+  
 }
 p{
-    padding-right: 10px;
+    font-size:larger;
+    margin-left: 20px;
+
 }
-a{
+.nav-link{
     text-decoration: none;
     color: white;
+    margin-left: 20px;
 }

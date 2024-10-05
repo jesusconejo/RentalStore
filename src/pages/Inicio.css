@@ -1,0 +1,14 @@
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Ocupa toda la anchura de la pantalla */
+   
+  }
+  
+  .bg-video {
+    max-width: 80%; /* Para que no se desborde el ancho */
+    max-height: 80%; /* Para que no se desborde la altura */
+    object-fit: contain; /* Mantiene las proporciones del video */
+  }
