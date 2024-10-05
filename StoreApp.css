@@ -1,37 +1,31 @@
 html, body {
-    width: 100vw;
-    background: linear-gradient(to right, rgb(78, 147, 159), rgb(17, 41, 41));
-    display: flexbox;
-    overflow-x: hidden;
-
+    height: 100%; /* Asegura que el html y body ocupen el 100% de la altura de la ventana */
+    margin: 0;
+    padding-top: 20vh;
+    padding-bottom: 5vh; /* Añadir espacio para que el contenido no quede oculto detrás del footer */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Permitir el scroll vertical */
 }
 
-.container-h {
-   
-    height: 30vh;
-    width: 100vw;
-}
 
-.container-body {   
+.container-body {
+    flex-grow: 1;
     width: 100vw;
+    
+ 
 }
 
 .white-line {
     border: none;
-    /* Quitar el borde predeterminado */
     height: 3px;
-    /* Grosor de la línea */
     background-color: rgb(0, 0, 0);
-    /* Color blanco */
     width: 100vw;
-    /* Ancho completo */
 }
 
 .container-footer {
-    bottom: 0;
-    right: 0;
+    height: 5vh; /* Altura fija del footer */
     width: 100vw;
-    height: 5vh;
-   
-
+    flex-shrink: 0; /* Evita que el footer cambie de tamaño */
+    bottom: 0;
 }

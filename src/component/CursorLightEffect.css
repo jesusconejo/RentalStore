@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Evita el scroll si el cursor se mueve fuera de la pantalla */
+    background: linear-gradient(to right, rgb(78, 147, 159), rgb(17, 41, 41));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .cursor-light {
+    width: 100px;  /* Tamaño de la "luz" que sigue el cursor */
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,0,0,0.99) 0%, rgba(255,0,0,0) 30%);
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;  /* Para que el cursor real funcione normalmente */
+    mix-blend-mode: screen; /* Para iluminar el fondo cuando el cursor lo toca */
+    transition: transform 0.09s ease-out; /* Para que la animación sea suave */
+  }
+  
+  h1 {
+    color: white;
+    font-size: 4rem;
+    text-align: center;
+    z-index: 1; /* Para que el texto esté siempre sobre la luz del cursor */
+  }
+  

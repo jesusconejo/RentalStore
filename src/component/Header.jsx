@@ -12,9 +12,9 @@ export const Header = () => {
     <div className="header-container">
       <div className="top-section">
         <div className="container-left">
-          <a href="/">
+          <NavLink to='/Inicio'>
             <img src="src/assets/cat.png" alt="cat" className="logo" />
-          </a>
+            </NavLink>
           <h1 className="titulo">Shizuka Store</h1>
         </div>
         <div className="container-right">

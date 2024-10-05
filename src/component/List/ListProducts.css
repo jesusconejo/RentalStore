@@ -7,7 +7,18 @@
 
 .actions-container{
     display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    
+    justify-content: space-around;
+    align-items: center;
+   
+}
+
+
+.table th,
+.table td {
+    padding: 4px 12px; /* Reducir el padding */
+    text-align: center; /* Centrar el contenido */
+}
+.btn-update{
+  border: none;
+  margin-left: 15px;
 }
