@@ -14,6 +14,7 @@ export const ListProducts = ({ initialProducts = [] }) => {
         name: '',
         description: '',
         price: '',
+        category:'',
         stock: '',
         imagePath: ''
     });
@@ -81,6 +82,7 @@ export const ListProducts = ({ initialProducts = [] }) => {
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Precio</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Acciones
 
@@ -100,6 +102,7 @@ export const ListProducts = ({ initialProducts = [] }) => {
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
                                 <td>{product.price}</td>
+                                <td>{product.category}</td>
                                 <td>{product.stock}</td>
                                 <td className="actions-container">
                                     <button className="btn btn-primary"

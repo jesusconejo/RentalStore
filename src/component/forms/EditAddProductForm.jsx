@@ -7,6 +7,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
     const [description, setDescription] = useState(initialProduct?.description || '');
     const [price, setPrice] = useState(initialProduct?.price || 0);
     const [stock, setStock] = useState(initialProduct?.stock || 0);
+    const [category, setCategory] = useState(initialProduct?.stock || '');
     const [img, setImg] = useState(initialProduct?.img || '');
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [upButton, setUpButton] = useState(false);
@@ -22,6 +23,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
             setUser(initialProduct.name);
             setDescription(initialProduct.description);
             setPrice(initialProduct.price);
+            setCategory(initialProduct.category)
             setStock(initialProduct.stock);
             setImg(initialProduct.imagePath);
 
@@ -36,6 +38,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
         producto.name = user;
         producto.description = description;
         producto.price = price;
+        producto.category= category;
         producto.stock = stock;
         producto.imagePath = img;
 
@@ -57,7 +60,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
     }
     const handleUploadImg = async (event) => {
         event.preventDefault();
-        
+
         if (img) {
             console.log('Archivo seleccionado:', img);
             const response = await fetchUploadImg(img);  // Aquí se pasa el archivo
@@ -100,6 +103,24 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
 
                 </div>
                 <div className='mb-3'>
+                    <label htmlFor="category" className='category'>
+                        {!category ? <small className="text-danger">*</small> : ''} 
+                    </label>
+                    <select
+                        className={`form-control ${isSubmitted && !category ? 'is-invalid' : ''}`}
+                        value={category || ""}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                        <option value="">Seleccione una Categoria</option>
+                        <option value="HALLOWEEN">Halloween</option>
+                        <option value="CHRISTMAS">Navidad</option>
+                        <option value="SUPERHERO">Super Heroes</option>
+                        <option value="ANIMALS">Animales</option>
+                        <option value="OTHER">Otros</option>
+                    </select>
+                </div>
+
+                <div className='mb-3'>
                     <label htmlFor="price" className='price'>Precio</label>
                     <input type="number" className={`form-control ${isSubmitted && !price ? 'is-invalid' : ''}`} value={price || 0} onChange={(e) => setPrice(e.target.value)} />
 
@@ -113,7 +134,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
                         type="file"
                         className='form-control'
                         id='fileInput'
-                      
+
                         onChange={(e) => setImg(e.target.files[0])}
                         required
                     />
