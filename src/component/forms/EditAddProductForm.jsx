@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './AddProductForm.css'
 import { fetchSaveProduct, fetchUpdateProduct } from '../../functions/productoApi';
 import { fetchUploadImg } from '../../functions/AwsApi';
-export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
+import { fetchGetAll } from '../../functions/CategoryApi';
+
+export const EditAddProductForm = ({ onSave, title, id, initialProduct, successful }) => {
     const [user, setUser] = useState(initialProduct?.name || '');
     const [description, setDescription] = useState(initialProduct?.description || '');
     const [price, setPrice] = useState(initialProduct?.price || 0);
@@ -11,10 +13,13 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
     const [img, setImg] = useState(initialProduct?.img || '');
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [upButton, setUpButton] = useState(false);
+    const [nameExist, setNameExits] = useState(false);
+    const [mensaje, setMensaje] = useState('');
     const producto = {
         name: null,
         description: null,
         price: null,
+        category: null,
         stock: null,
         imagePath: null
     };
@@ -30,33 +35,56 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
         }
     }
     useEffect(() => {
-        loadProduct();
+        title === 'Editar' ? '' : loadProduct();
     }, []);
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         producto.name = user;
         producto.description = description;
         producto.price = price;
-        producto.category= category;
+        producto.category = category;
         producto.stock = stock;
         producto.imagePath = img;
-
-        //TODO hacer una condicion si titulo es Editar que consuma un Update en vez de un save
+        console.log('producto: ', producto);
         if (title === "Editar") {
-            const response = await fetchUpdateProduct(producto, id);
-            console.log('Response: ', response);
+            try {
+                const response = await fetchUpdateProduct(producto, id);
+                setMensaje('Se actualizo exitosamente');
+                successful(true);
+            } catch (error) {
+                if ((error.message === 'Nombre ya existe')) {
+                    setMensaje(`"Nombre ` + producto.name + ` ya existe"`);
+                    setNameExits(true);
+                    console.log(producto.name, error.message)
+                    throw new Error("mantener");
+                }
+            }
         } else {
-            const response = await fetchSaveProduct(producto);
-            console.log('Response: ', response);
+            try {
+                const response = await fetchSaveProduct(producto);
+                setMensaje('Se guardo exitosamente');
+                successful(true);
+            } catch (error) {
+                if ((error.message === 'Nombre ya existe')) {
+                    setMensaje(`"Nombre ` + producto.name + ` ya existe"`);
+                    setNameExits(true);
+                    console.log(producto.name, error.message)
+                    throw new Error("mantener");
+                }
+            }
         }
-        //console.log(producto);
+
 
         onSave(false);
         setUser('');
         setDescription('');
         setStock('');
         setPrice('');
+    }
+    const handleUpload = (valor) => {
+        setImg(valor);
+
+        console.log('imagen', valor);
     }
     const handleUploadImg = async (event) => {
         event.preventDefault();
@@ -78,18 +106,49 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
         }
 
     }
+    const [categories, setCategories] = useState([]);
 
+    useEffect(() => {
+        if (nameExist) {
+            const timer = setTimeout(() => {
+                setNameExits(false);  // El mensaje desaparecerá después de 3 segundos
+            }, 3000);
+            return () => clearTimeout(timer);  // Limpia el temporizador cuando el componente se desmonta o el estado cambia
+        }
+    }, [nameExist]);
+    useEffect(() => {
+        // Llamada a la API para obtener las categorías
+        const fetchCategories = async () => {
+            try {
+                const response = await fetchGetAll(); // Cambia la URL según tu API
+                
+                setCategories(response); // Guarda los datos en el estado
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
 
+        fetchCategories();
+    }, []);
     return (
         <div className='container-form'>
+            {nameExist ? (
+                <div className='name-message'>
+                    <p>{mensaje}</p>
+                </div>
+            ) : ''}
             <h4>{title} Producto {id}</h4>
             {!user || !description || !price || !stock || !img ? <small className="text-danger">(*) Todos los campos son obligatorios</small> : ''}
 
-            <hr className='hr-line' />
+
             <form className='form-producto' >
                 <div className='mb-3'>
                     <label htmlFor="userName" className='user-name'>{!user ? <small className="text-danger">*</small> : ''} Nombre del Producto</label>
-                    <input type="text" className={`form-control ${isSubmitted && !user ? 'is-invalid' : ''}`} value={user || ''} onChange={(e) => setUser(e.target.value)} />
+                    <input type="text"
+                        className={`form-control ${isSubmitted && !user ? 'is-invalid' : ''}`}
+                        value={user || ''}
+                        onChange={(e) => setUser(e.target.value)}
+                    />
 
                 </div>
                 <div className='mb-3'>
@@ -103,8 +162,8 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
 
                 </div>
                 <div className='mb-3'>
-                    <label htmlFor="category" className='category'>
-                        {!category ? <small className="text-danger">*</small> : ''} 
+                    <label htmlFor="category" className='category'>Categoria
+                        {!category ? <small className="text-danger">*</small> : ''}
                     </label>
                     <select
                         className={`form-control ${isSubmitted && !category ? 'is-invalid' : ''}`}
@@ -112,11 +171,11 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
                         onChange={(e) => setCategory(e.target.value)}
                     >
                         <option value="">Seleccione una Categoria</option>
-                        <option value="HALLOWEEN">Halloween</option>
-                        <option value="CHRISTMAS">Navidad</option>
-                        <option value="SUPERHERO">Super Heroes</option>
-                        <option value="ANIMALS">Animales</option>
-                        <option value="OTHER">Otros</option>
+                        {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -135,7 +194,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
                         className='form-control'
                         id='fileInput'
 
-                        onChange={(e) => setImg(e.target.files[0])}
+                        onChange={(e) => handleUpload(e.target.files[0])}
                         required
                     />
 
@@ -147,12 +206,12 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct }) => {
                         Subir archivo
                     </button>
                 </div>
-                <hr className='hr-line' />
+
                 <button
                     type="submit"
                     className="btn btn-primary"
                     onClick={handleSubmit}
-                    disabled={!user || !description || !price || !stock || !img}
+                    disabled={!user && !description && !price && !stock && title === 'Editar' ? '' : !img && !upButton}
                 >
                     {title === 'Editar' ? 'Actualizar' : 'Guardar'}
                 </button>

@@ -11,13 +11,13 @@
   border: none;
   border-radius: 7px;
 }
-.nav-link-custom {
+.nav-link-title {
   color: white;
- 
+  padding-left: 15px;
   text-decoration: none;
   font-size: 20px;
 }
-.nav-link-custom:hover{
+.nav-link-title:hover{
   color: bisque;
 }
 .nav-item{

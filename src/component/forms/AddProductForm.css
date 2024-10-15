@@ -23,3 +23,18 @@
     align-items: center;       
    
 }
+.name-message{
+    background-color: rgba(0, 255, 255, 0.9); /* Fondo rojo semi-transparente */
+    border-radius: 2px;
+    padding-top: 10px;
+    color: red;
+    text-align: left;    
+    position: fixed; /* Fijo en la pantalla */
+    top: 35%; /* A 20px del borde superior */
+    left: 35%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    z-index: 9999; /* Asegurarse de que esté sobre otros elementos */
+    width: 20%; /* Ajustar el ancho del mensaje */
+    max-width: 600px; /* Ancho máximo para pantallas grandes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.9); /* Sombra para destacar */
+}

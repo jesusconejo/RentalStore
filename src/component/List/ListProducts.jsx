@@ -10,11 +10,13 @@ export const ListProducts = ({ initialProducts = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [productoId, setProductoId] = useState('');
+    const [popMessage, setPopMessage] = useState(false);
+    const [message, setMessage] = useState('');
     const [producto, setProducto] = useState({
         name: '',
         description: '',
         price: '',
-        category:'',
+        category: '',
         stock: '',
         imagePath: ''
     });
@@ -60,77 +62,94 @@ export const ListProducts = ({ initialProducts = [] }) => {
     useEffect(() => {
         handleList();
     }, []);
-
+    useEffect(() => {
+        if (popMessage) {
+            const timer = setTimeout(() => {
+                setPopMessage(false);  // El mensaje desaparecerá después de 3 segundos
+            }, 3000);
+            return () => clearTimeout(timer);  // Limpia el temporizador cuando el componente se desmonta o el estado cambia
+        }
+    }, [popMessage]);
     const handleDelete = async (productId) => {
         const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este producto?");
-       
+
         if (confirmDelete) {
             const response = await fetchDeleteProduct(productId);
             if (response && response.message === 'Producto eliminado correctamente') {
                 const updatedProducts = products.filter(product => product.id !== productId);
                 setProducts(updatedProducts);
+                setMessage('Producto eliminado correctamente');
+                setPopMessage(true);
             }
         }
     };
 
     return (
-        <div className='container-lista'>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Acciones
-
-                            <button className="btn-update"
-                                onClick={handleList}>
-                                <img src="src/assets/actualizar.png" alt="Cerrar" className="close-icon" />
-                            </button>
-
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className="table-group-divider">
-                    {products.length > 0 ? (
-                        products.map((product) => (
-                            <tr key={product.id}>
-                                <th scope="row">{product.id}</th>
-                                <td>{product.name}</td>
-                                <td>{product.description}</td>
-                                <td>{product.price}</td>
-                                <td>{product.category}</td>
-                                <td>{product.stock}</td>
-                                <td className="actions-container">
-                                    <button className="btn btn-primary"
-                                        onClick={() => openModal(product.id, product.name, product.description, product.imagePath, product.price, product.stock)}>
-                                        Editar
-                                    </button>
-                                    <ModalForm isOpen={isModalOpen} onClose={closeModal}>
-
-                                        <EditAddProductForm onSave={setIsModalOpen} title={"Editar"} id={productoId} initialProduct={producto} />
-                                    </ModalForm>
-                                    <button className="btn btn-danger" onClick={() => handleDelete(product.id)}>Eliminar</button>
-                                    <button className="btn btn-info"
-                                        onClick={() => openModalCard(product.id, product.name, product.description, product.imagePath, product.price, product.stock)}>
-                                        Ver
-                                    </button>
-                                    <ModalForm isOpen={isViewModalOpen} onClose={closeViewModal}>
-                                        <CardComponent title={producto.name} text={producto.description} imageUrl={producto.imagePath} stock={producto.stock} precio={producto.price} />
-                                    </ModalForm>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+        <>
+          {popMessage?(
+                <div className='error-message'>
+                    <p>{message}</p>
+                </div>
+            ):''}
+            
+            <div className='container-lista'>
+                <table className="table">
+                    <thead>
                         <tr>
-                            <td colSpan="5" className="text-center">No hay productos disponibles</td>
+                            <th scope="col">id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Acciones
+
+                                <button className="btn-update"
+                                    onClick={handleList}>
+                                    <img src="src/assets/actualizar.png" alt="Cerrar" className="close-icon" />
+                                </button>
+
+                            </th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody className="table-group-divider">
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <tr key={product.id}>
+                                    <th scope="row">{product.id}</th>
+                                    <td>{product.name}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.stock}</td>
+                                    <td className="actions-container">
+                                        <button className="btn btn-primary"
+                                            onClick={() => openModal(product.id, product.name, product.description, product.imagePath, product.price, product.stock)}>
+                                            Editar
+                                        </button>
+                                        <ModalForm isOpen={isModalOpen} onClose={closeModal}>
+
+                                            <EditAddProductForm onSave={setIsModalOpen} title={"Editar"} id={productoId} initialProduct={producto} />
+                                        </ModalForm>
+                                        <button className="btn btn-danger" onClick={() => handleDelete(product.id)}>Eliminar</button>
+                                        <button className="btn btn-info"
+                                            onClick={() => openModalCard(product.id, product.name, product.description, product.imagePath, product.price, product.stock)}>
+                                            Ver
+                                        </button>
+                                        <ModalForm isOpen={isViewModalOpen} onClose={closeViewModal}>
+                                            <CardComponent title={producto.name} text={producto.description} imageUrl={producto.imagePath} stock={producto.stock} precio={producto.price} />
+                                        </ModalForm>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-center">No hay productos disponibles</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
