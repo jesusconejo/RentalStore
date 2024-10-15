@@ -1,18 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
-.container-producto {   
-    margin-top: 50vh;
+html, body {
+   
+    overflow-y: auto; /* Desactiva el scroll en el body */
+}
+.container-producto {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
+    gap: 15px;
 
 }
 
 /* Grilla de tarjetas (cards) */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);    
+    grid-template-columns: repeat(1, 1fr);
     gap: 5px;
     padding: 2px;
 
@@ -20,25 +25,25 @@
 
 @media (min-width: 540px) {
     .card-grid {
-        grid-template-columns: repeat(2, 1fr);        
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 720px) {
     .card-grid {
-        grid-template-columns: repeat(3, 1fr);        
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 960px) {
     .card-grid {
-        grid-template-columns: repeat(4, 1fr);        
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (min-width: 1140px) {
     .card-grid {
-        grid-template-columns: repeat(5, 1fr);        
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
@@ -53,25 +58,43 @@ hr {
     height: 3px;
 }
 
+.container-category {
+    width: 75vw;
+    background-color: rgb(0, 90, 90);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+    padding: 5px;
+    gap: 15px; /* Espacio entre los elementos */
 
+}
 
 .subTitle {
-    width: 50vw;
-    background-color: rgb(0, 90, 90);
     color: azure;
-    padding: 5px;
     font-family: "Kaushan Script", cursive;
-    border: none;
-    border-radius: 5px;
+    margin: 0; /* Elimina margen extra */
+    line-height: 1.5; /* Asegura que el texto esté alineado correctamente */
+    
+}
+
+.form-control {
+    padding: 5px; /* Ajusta el padding */
+  height: auto; /* Permite que el tamaño del select se ajuste automáticamente */
+  line-height: 0.5; /* Alinea el contenido del select */
+  display: inline-block; /* Asegura que se mantenga como un bloque en línea */
+  vertical-align: middle; /* Alinea con el texto */
+
 }
 
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-  }
-  
-  .pagination button {
+}
+
+.pagination button {
     margin: 0 5px;
     padding: 10px;
     background-color: #007bff;
@@ -79,13 +102,14 @@ hr {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .pagination button.active {
+}
+
+.pagination button.active {
     background-color: #0056b3;
-  }
-  
-  .pagination button:hover {
+}
+
+.pagination button:hover {
     background-color: #0056b3;
-  }
+}
+
 
