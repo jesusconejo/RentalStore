@@ -35,6 +35,7 @@ export const StoreApp = () => {
               }
             />
             <Route path='/Inicio' element={<Inicio />}></Route>
+            <Route path='/' element={<Inicio />}></Route>
             <Route path='/InfoUser' element={<InfoUser></InfoUser>}></Route>
           </Routes>
         </div>

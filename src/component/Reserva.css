@@ -1,0 +1,48 @@
+
+#contenedor{
+    margin-left: 15vw;
+    
+}
+
+.politicas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    color: rgb(255, 240, 240);
+}
+
+
+
+#title{
+    color: aliceblue;
+    padding-bottom: 5px;
+}
+#linea-h{
+    border-left: 1px solid #ccc;
+    width: 50%;
+}
+#datos-reserva{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: start;    
+    font-size: 20px;
+    color: aliceblue;
+    gap: 10px;
+
+}
+#title-reserva{
+    color: blanchedalmond;
+}
+#fecha{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    border-radius: 8px;
+    gap: 5px;
+    padding-bottom: 5px;
+}

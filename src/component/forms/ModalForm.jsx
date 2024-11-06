@@ -1,7 +1,9 @@
 import React from 'react'
 import './ModalForm.css'
 
-export const ModalForm = ({ isOpen, onClose, children }) => {
+
+export const ModalForm = ({ isOpen, onClose, children}) => {
+   
     if (!isOpen) return null;
     return(
         <div className="modal-overlay" onClick={onClose}>

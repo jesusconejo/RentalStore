@@ -4,14 +4,13 @@ import { fetchSaveProduct, fetchUpdateProduct } from '../../functions/productoAp
 import { fetchUploadImg } from '../../functions/AwsApi';
 import { fetchGetAll } from '../../functions/CategoryApi';
 
-export const EditAddProductForm = ({ onSave, title, id, initialProduct, successful }) => {
+export const EditProductForm = ({ onSave, id, initialProduct, successful }) => {
     const [user, setUser] = useState(initialProduct?.name || '');
     const [description, setDescription] = useState(initialProduct?.description || '');
     const [price, setPrice] = useState(initialProduct?.price || 0);
     const [stock, setStock] = useState(initialProduct?.stock || 0);
-    const [category, setCategory] = useState(initialProduct?.stock || '');
-    const [img, setImg] = useState(initialProduct?.img || '');
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [category, setCategory] = useState(initialProduct?.category || '');
+    const [img, setImg] = useState(initialProduct?.img || '');   
     const [upButton, setUpButton] = useState(false);
     const [nameExist, setNameExits] = useState(false);
     const [mensaje, setMensaje] = useState('');
@@ -24,18 +23,15 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
         imagePath: null
     };
     const loadProduct = async () => {
-        if (title === 'Editar') {
-            setUser(initialProduct.name);
-            setDescription(initialProduct.description);
-            setPrice(initialProduct.price);
-            setCategory(initialProduct.category)
-            setStock(initialProduct.stock);
-            setImg(initialProduct.imagePath);
-
-        }
+        setUser(initialProduct.name);
+        setDescription(initialProduct.description);
+        setPrice(initialProduct.price);
+        setCategory(initialProduct.category)
+        setStock(initialProduct.stock);
+        setImg(initialProduct.imagePath);
     }
     useEffect(() => {
-        title === 'Editar' ? '' : loadProduct();
+         loadProduct();
     }, []);
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -46,7 +42,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
         producto.stock = stock;
         producto.imagePath = img;
         console.log('producto: ', producto);
-        if (title === "Editar") {
+     
             try {
                 const response = await fetchUpdateProduct(producto, id);
                 setMensaje('Se actualizo exitosamente');
@@ -59,20 +55,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                     throw new Error("mantener");
                 }
             }
-        } else {
-            try {
-                const response = await fetchSaveProduct(producto);
-                setMensaje('Se guardo exitosamente');
-                successful(true);
-            } catch (error) {
-                if ((error.message === 'Nombre ya existe')) {
-                    setMensaje(`"Nombre ` + producto.name + ` ya existe"`);
-                    setNameExits(true);
-                    console.log(producto.name, error.message)
-                    throw new Error("mantener");
-                }
-            }
-        }
+       
 
 
         onSave(false);
@@ -121,7 +104,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
         const fetchCategories = async () => {
             try {
                 const response = await fetchGetAll(); // Cambia la URL según tu API
-                
+
                 setCategories(response); // Guarda los datos en el estado
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -137,7 +120,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                     <p>{mensaje}</p>
                 </div>
             ) : ''}
-            <h4>{title} Producto {id}</h4>
+            <h4>Actualizar Producto {id}</h4>
             {!user || !description || !price || !stock || !img ? <small className="text-danger">(*) Todos los campos son obligatorios</small> : ''}
 
 
@@ -145,7 +128,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                 <div className='mb-3'>
                     <label htmlFor="userName" className='user-name'>{!user ? <small className="text-danger">*</small> : ''} Nombre del Producto</label>
                     <input type="text"
-                        className={`form-control ${isSubmitted && !user ? 'is-invalid' : ''}`}
+                        className={`form-control ${!user ? 'is-invalid' : ''}`}
                         value={user || ''}
                         onChange={(e) => setUser(e.target.value)}
                     />
@@ -153,12 +136,12 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                 </div>
                 <div className='mb-3'>
                     <label htmlFor="descripcion" className='decription' >{!description ? <small className="text-danger">*</small> : ''} Descripcion</label>
-                    <input type="text" className={`form-control ${isSubmitted && !description ? 'is-invalid' : ''}`} value={description || ''} onChange={(e) => setDescription(e.target.value)} />
+                    <input type="text" className={`form-control ${!description ? 'is-invalid' : ''}`} value={description || ''} onChange={(e) => setDescription(e.target.value)} />
 
                 </div>
                 <div className='mb-3'>
                     <label htmlFor="stock" className='stock'> {!stock ? <small className="text-danger">{`*>0`}</small> : ''} Stock</label>
-                    <input type="number" className={`form-control ${isSubmitted && !stock ? 'is-invalid' : ''}`} value={stock || 0} onChange={(e) => setStock(e.target.value)} />
+                    <input type="number" className={`form-control ${!stock ? 'is-invalid' : ''}`} value={stock || 0} onChange={(e) => setStock(e.target.value)} />
 
                 </div>
                 <div className='mb-3'>
@@ -166,7 +149,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                         {!category ? <small className="text-danger">*</small> : ''}
                     </label>
                     <select
-                        className={`form-control ${isSubmitted && !category ? 'is-invalid' : ''}`}
+                        className={`form-control ${!category ? 'is-invalid' : ''}`}
                         value={category || ""}
                         onChange={(e) => setCategory(e.target.value)}
                     >
@@ -181,7 +164,7 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
 
                 <div className='mb-3'>
                     <label htmlFor="price" className='price'>Precio</label>
-                    <input type="number" className={`form-control ${isSubmitted && !price ? 'is-invalid' : ''}`} value={price || 0} onChange={(e) => setPrice(e.target.value)} />
+                    <input type="number" className={`form-control ${!price ? 'is-invalid' : ''}`} value={price || 0} onChange={(e) => setPrice(e.target.value)} />
 
                 </div>
                 <hr className='hr-line' />
@@ -211,9 +194,9 @@ export const EditAddProductForm = ({ onSave, title, id, initialProduct, successf
                     type="submit"
                     className="btn btn-primary"
                     onClick={handleSubmit}
-                    disabled={!user && !description && !price && !stock && title === 'Editar' ? '' : !img && !upButton}
+                    disabled={!user && !description && !price && !stock  && !upButton}
                 >
-                    {title === 'Editar' ? 'Actualizar' : 'Guardar'}
+                    {'Actualizar'}
                 </button>
 
             </form>

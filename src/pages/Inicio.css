@@ -12,3 +12,16 @@
     max-height: 80%; /* Para que no se desborde la altura */
     object-fit: contain; /* Mantiene las proporciones del video */
   }
+  #hello{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+  #admin{
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  #admin:hover{
+    background-color: rgb(0, 0, 100, 0.1);
+    transform: scale(1.05);
+  }

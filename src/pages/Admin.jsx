@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Admin.css';
-import { EditAddProductForm } from '../component/forms/EditAddProductForm';
 import { ListProducts } from '../component/List/ListProducts';
 import { ModalForm } from '../component/forms/ModalForm';
 import { ListUsers } from '../component/List/ListUsers';
 import { AddCategory } from '../component/forms/AddCategory';
+import { AddProductForm } from '../component/forms/AddProductForm';
 
 export const Admin = () => {
   const [date, setDate] = useState('');
@@ -85,14 +85,14 @@ export const Admin = () => {
       <div className='container-list'>
         <label id='productos'>GESTION DE PRODUCTOS</label>
         <div id='botones'>
-          <button className="btn btn-primary mb-3" id='agregar' onClick={openModalCategory}>Agregar Categoria</button>
+          <button className="btn btn-primary mb-3" id='agregar' onClick={openModalCategory}>Categoria</button>
           <button className="btn btn-primary mb-3" id='agregar' onClick={openModal}>Agregar Producto</button>
         </div>
         <ModalForm isOpen={isCategoryOpen} onClose={closeModalCategory}>
           <AddCategory onSave={setIsCategoryOpen}/>
         </ModalForm>
         <ModalForm isOpen={isModalOpen} onClose={closeModal}>
-          <EditAddProductForm onSave={setIsModalOpen} title={"Crear"} successful={setSuccessfuly} />
+          <AddProductForm onSave={setIsModalOpen}  successful={setSuccessfuly} />
         </ModalForm>
 
         <ListProducts />

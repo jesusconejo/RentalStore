@@ -44,3 +44,33 @@ export const fetchSaveCategory = async (category) => {
         
      }
  };
+ export const fetchDeleteCategory = async (id) => {
+    try {
+        const response = await fetch(API_URL + 'delete?id=' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            
+            if (response.status === 409) {     
+                const data = await response.json();
+               // console.log('data: ',data);        
+                return data;
+               
+            }
+           throw new Error(response.status);
+        }
+
+        // Si la respuesta es OK, no necesariamente tiene que tener contenido
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : { message: 'Producto eliminado correctamente' };
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};

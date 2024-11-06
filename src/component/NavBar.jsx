@@ -26,12 +26,7 @@ export const NavBar = ({isLogin, nameUser }) => {
                             <li className="nav-item">
                                 <NavLink to={'/'} className="nav-link" >Nosotros</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <input type="text" className='input-buscar' />
-                            </li>
-                            <li className="nav-item">
-                                <button className="btn-nav" type="submit"> Buscar</button>
-                            </li>                           
+                            
                         </ul>
 
                     </div>

@@ -141,3 +141,27 @@ export const fetchPorductByName = async (name) => {
         throw error;  // Lanza el error para manejarlo en el componente
     }
 };
+
+
+export const fetchGetProductsByIds = async (ids) => {
+    try {
+        const response = await fetch(API_URL + 'getProductsByListId', {
+            method: 'POST', // Usamos POST si el endpoint requiere un cuerpo con los IDs
+            headers: {
+                'Content-Type': 'application/json', // Indicamos que el cuerpo será JSON
+            },
+            body: JSON.stringify(ids), // Convertimos el array de IDs a JSON
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`); // Manejamos errores
+        }
+
+        const data = await response.json(); // Parseamos la respuesta JSON
+        return data; // Devolvemos los datos obtenidos
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error; // Propagamos el error para que pueda manejarse más arriba
+    }
+};
+

@@ -1,0 +1,7 @@
+@import "rsuite/dist/rsuite.css";
+
+.body, html{
+    overflow: visible;
+}
+#root{ padding: 10px; }
+  

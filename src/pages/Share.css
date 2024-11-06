@@ -1,0 +1,28 @@
+#container-share{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.share{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+#info{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    color: antiquewhite;
+
+}
+
+#icon-share{
+    width: 38px;
+    height: 38px;
+    cursor: pointer;  
+}
+#icon-share:hover{
+    transform: scale(1.15);
+}

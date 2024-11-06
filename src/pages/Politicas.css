@@ -1,0 +1,14 @@
+.policy-container{
+    display: flex;
+    padding: 50px;
+    height:75vh;
+    flex-direction: column;
+    overflow-y:scroll;
+    color: aliceblue;
+}
+.policy{
+    color: aliceblue;
+}
+.text-policy{
+    line-height: 1.5;
+}

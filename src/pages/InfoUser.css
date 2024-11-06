@@ -12,6 +12,9 @@
     align-items: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+#hello{
+    gap: 20px;
+}
 #presentacion{
     margin-top: 10px;
     font-family: "Kaushan Script", cursive;
@@ -32,3 +35,57 @@
     color: aliceblue;
     font-size: 18px;
 }
+.policy-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    
+    padding-right: 20px;
+   
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .policy-c:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    animation: fadeInOut 1s forwards;
+  }
+  /* Animación para aparecer y desaparecer */
+@keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  #policy {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+  }
+  
+  #policy:hover {
+    transform: scale(1.05);
+  }
+  

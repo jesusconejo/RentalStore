@@ -85,20 +85,26 @@ export const CreateAcount = () => {
         userObject.password=password;
         try {
             const response = await fetchSaveUser(userObject);
-            console.log('responseCreate:', response);
+            //console.log('responseCreate:', response);
             if(response.errorResponseDTO!==null){
-                console.log(response.errorResponseDTO.error,response.errorResponseDTO.message );
-                setMessage('Ya existe un '+ (response.errorResponseDTO.error==='userName'?'Usuario':'Correo')+' '+response.errorResponseDTO.message );
-                setPopMessage(true);
+                //console.log(response.errorResponseDTO.error,response.errorResponseDTO.message );
+                Swal.fire({
+                    icon: "error",
+                    title: "Uups...",
+                    text: 'Ya existe un '+ (response.errorResponseDTO.error==='userName'?'Usuario':'Correo')+' '+response.errorResponseDTO.message 
+                  });
+               // setMessage('Ya existe un '+ (response.errorResponseDTO.error==='userName'?'Usuario':'Correo')+' '+response.errorResponseDTO.message );
+                //setPopMessage(true);
                 return;
             }
-            console.log("exitoso");
+            Swal.fire("¡Cuenta creada correctamente!");
+            //console.log("exitoso");
             setName('');
             setLastName('');
             setEmail('');
             setUser('');
             navigate('/Login');
-            setMessage('Creado Exitosamente')
+            //setMessage('Creado Exitosamente')
         } catch (error) {
             console.log('error', error);
         }

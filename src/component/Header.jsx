@@ -4,36 +4,21 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 export const Header = () => {
-  const { logout } = useAuth();
-
-  const [id, setId] = useState('');
-  const [userName, setUserName] = useState('');
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const parsedUserData = JSON.parse(localStorage.getItem('user'));
-  //console.log('Header log:', parsedUserData);
-  const close = () => {
-   
-    logout();
-    navigate('/Inicio');
-  }
-  useEffect(() => {
-    if (parsedUserData) {
-      setId(parsedUserData.id);
-      setName(parsedUserData.name);
-      setLastName(parsedUserData.lastName);
-      setUserName(parsedUserData.userName);
-    }
-
-  }, []);
-
   const textAvatar = (name, lastName) => {
     if (!name) return ''; // Si el texto es nulo o vacío, retorna una cadena vací
     const firts = name.charAt(0).toUpperCase(); // Extrae la primera letra y la convierte a mayúscula
     const second = lastName.charAt(0).toUpperCase();
     return firts + second;
   };
+  const close = () => {
+    Swal.fire("¡Sesión Cerrada Correcatmente!");
+    logout();
+    navigate('/Inicio');
+  }
+
+
   return (
     <div className="header-container">
       <div className="top-section">
@@ -44,12 +29,12 @@ export const Header = () => {
           <h1 className="titulo">Shizuka Store</h1>
         </div>
         <div className="container-right">
-          { parsedUserData ?
+          {user ?
             <div className="container-user">
               <NavLink
                 to="/InfoUser"
-                state={{ id: id }} // Aquí pasas los datos como estado
-                className="nav-link-custom">{textAvatar(userName, lastName)}
+               
+                className="nav-link-custom">{textAvatar(user.name, user.lastName)}
               </NavLink>
               <button className="btn btn-primary" onClick={close}>Cerrar Sesión</button>
               <button className="cart-button" >
@@ -68,7 +53,7 @@ export const Header = () => {
         </div>
 
       </div>
-      <NavBar isLogin={ parsedUserData} nameUser={name + ' ' + lastName} />
+      <NavBar isLogin={user} nameUser={user ? `${user.name} ${user.lastName}` : ''} />
     </div>
   );
 }

@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     
 
   const login = (userData) => {
-    console.log('AuthProvider', userData);
+   // console.log('AuthProvider', userData);
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };
@@ -21,8 +21,15 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user'); 
   };
 
+  const upDateUserLikes = (updatedLikes) => {
+    const updatedUser = { ...user, likeList: updatedLikes };
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, upDateUserLikes }}>
       {children}
     </AuthContext.Provider>
   );

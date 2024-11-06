@@ -1,44 +1,62 @@
 .card {
-  width: 14rem;
-
+  width: 15rem;
 }
-.card:hover{
-    background-color: rgb(50, 165, 165);
+.card:hover {
+  background-color: rgba(204, 230, 255, 0.8);
 }
 
-.card-body{
-  position: relative;
-  display: flex;
-  
+.card-body {  
+  display: flex;  
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
-.card-title{ 
+
+.card-title {
   position: relative;
- margin-top: 0;
- 
-  padding: 0;
+  margin-bottom: 2px;  
 }
-.card-text{
-  margin-top: 0;
+
+.card-text {
+ 
   padding-bottom: 10px;
   font-size: 12px;
   position: relative;
 
 }
-.btn-success {
-  padding-top: 5px;
-  border: none;
-  background-color: rgb(0,188,188); /* Cambia el color si quieres */
-  font-size: 1em; /* Aumenta el tamaño del texto */
-  border-radius: 10px; /* Cambia el borde redondeado */
-  padding: 3px 10px; /* Cambia el padding */  
-  position: absolute; /* El botón se posiciona dentro del contenedor */
-  bottom: 5px; /* Pegado a la parte inferior */
-  left: 50%; /* Para centrar horizontalmente */
-  transform: translateX(-50%); /* Centra el botón horizontalmente */
+.icon-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute; 
+  top: 10px; /* Ajusta según sea necesario */
+  left: 10px; /* Ajusta según sea necesario */
+  font-size: 14px; /* Tamaño del ícono */
+  color: red; /* Color del ícono, puedes cambiarlo */  
+}
+.start-container{
+  display: flex;
+  flex-direction: column;
+  position: absolute; 
+  top: 10px; /* Ajusta según sea necesario */
+  right: 10px; /* Ajusta según sea necesario */
+  font-size: 14px; /* Tamaño del ícono */
+  color: red; /* Color del ícono, puedes cambiarlo */  
+}
+.card-icon{
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+.card-icon:hover{
+  transform: scale(1.05);
 }
 
-.btn-success:hover {
-  background-color: rgb(0,140,140); /* Cambia el color en hover */
+.icon-number {
+  position: absolute; /* Posiciona el número en relación al contenedor */
+  top: 50%; /* Ajusta la posición vertical */
+  left: 50%; /* Ajusta la posición horizontal */
+  color: white; /* Color del texto */
+  font-size: 18px; /* Tamaño de la fuente */
+  font-weight: bold; /* Grosor del texto */
+  transform: translate(-50%, -50%); /* Centra el texto sobre la imagen */
 }

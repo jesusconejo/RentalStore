@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import './LoginAcount.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { fetchLogin } from '../functions/UserApi';
-import eventEmitter from '../functions/EventEmitter';
 import { useAuth } from '../component/AuthProvider';
 export const Login = () => {
     const { login } = useAuth();
@@ -63,35 +62,34 @@ export const Login = () => {
             console.log('response', response);
             if(response.errorResponseDTO!==null){               
                 if(response.errorResponseDTO.errorCode===1){
-                    console.log('errorCode', response.errorResponseDTO.errorCode);
-                    setMessage(showUser?'Correo ó Clave Invalida':'Usuario o Clave invalida');
-                    setPopMessage(true);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Uups...",
+                        text: showUser?'Correo ó Clave Invalida':'Usuario o Clave invalida '                        
+                      });
+                   // console.log('errorCode', response.errorResponseDTO.errorCode);
+                   
                 }else if(response.errorResponseDTO.errorCode===4){
-                    console.log('errorCode', response.errorResponseDTO.errorCode);
-                    setMessage(showUser?'Correo ó Clave Invalida':'Usuario o Clave invalida');
-                    setPopMessage(true);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Uups...",
+                        text: showUser?'Correo ó Clave Invalida':'Usuario o Clave invalida '                        
+                      });
+                    //console.log('errorCode', response.errorResponseDTO.errorCode);
+                   
                 }
                 console.log('error', response.errorResponseDTO);
-            }else{
-              
-            
-
-                setMessage('Bienvenido '+(showUser?email:userName));
-                setIsLoggued(true);
-              //  eventEmitter.dispatchEvent(new CustomEvent('cambioValor', { detail: response }));
-                setPopMessage(true);
+            }else{              
+               Swal.fire('¡Bienvenido '+(showUser?email:userName)+'!');
+                setIsLoggued(true);                              
                 setPassword('');
                 {showUser?setEmail(''):setUserName('')}
                 login(response); // Guardar los datos de autenticación
                 navigate(response.rol==='admin'?'/Admin':'/Productos');
             }
-
-
         } catch (error) {
             console.log('error', error);
-        }      
-
-
+        }    
     }
    
 
