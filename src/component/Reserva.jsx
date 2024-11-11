@@ -5,12 +5,17 @@ import { Calendario } from './Calendario'
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import './Reserva.css'
+import { fetchSaveReservation } from '../functions/ReservaApi';
+import { useNavigate } from 'react-router-dom';
+import { userBuyCar } from './BuyCarProvider';
 
 dayjs.extend(isoWeek);
-export const Reserva = ({ title, stock, precio, urlImg }) => {
+export const Reserva = ({ idProduct, idUser, title, stock, precio, urlImg }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inicio, setInicio] = useState('');
     const [fin, setFin] = useState('');
+    const { saveBuyCar } = userBuyCar();
+    const navigate = useNavigate();
     const handlePolicy = () => {
         setIsModalOpen(true);
     };
@@ -21,6 +26,29 @@ export const Reserva = ({ title, stock, precio, urlImg }) => {
         const endDate = dayjsDate.add(8, 'day').format("DD/MM/YYYY"); // Sumar 8 días
         setFin(endDate); // Fecha de fin
     };
+    const reservationData = {
+        idUser: idUser,
+        idProduct: idProduct,
+        startReservation: inicio
+
+    };    
+   
+
+    const save = async () => {
+        try {
+            const response = await fetchSaveReservation(reservationData);
+            console.log(response);  // Asegúrate de ver la respuesta en la consola
+         
+                saveBuyCar(response);  // Actualiza el carrito en el contexto
+                navigate('/BuyCar')
+               
+            
+        } catch (error) {
+            console.error('Error al guardar la reserva:', error);
+        }
+    };
+
+
     return (
         <>  <h2 id='title'>Reserva  {title} para tu michi</h2>
             <hr id='linea-h' />
@@ -55,7 +83,7 @@ export const Reserva = ({ title, stock, precio, urlImg }) => {
                 </div>
             </div>
             <hr id='linea-h' />
-            <button className='btn btn-primary' >Reservar</button>
+            <button className='btn btn-primary' onClick={save}>Reservar</button>
 
 
         </>

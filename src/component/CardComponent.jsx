@@ -104,7 +104,7 @@ export const CardComponent = ({ id, title, text, imageUrl, stock, precio, isLike
         <p className="card-text"> {text}.</p>
         <button className="btn btn-primary" type='submit' onClick={openProduct}>{stock} Disponible</button>
         <ModalForm isOpen={isOpenReserva} onClose={closeModalReerva}>
-         <Reserva title={title} stock={stock} precio={precio} urlImg={imageUrl}></Reserva>
+         <Reserva idProduct={id} idUser={user.id} title={title} stock={stock} precio={precio} urlImg={imageUrl}></Reserva>
         </ModalForm>
       </div>
     </div>

@@ -46,11 +46,15 @@ export const Qualification = ({ idProduct, title, description, img , user}) => {
             return;
         }
     };
-    useEffect(() => {        
-        setIsQa(idProduct===user.favoriteList[0].idProduct);       
-        getQualificationByProductId(idProduct);
-        
-    }, [])
+    useEffect(() => {
+        if (user.favoriteList && user.favoriteList.length > 0) {
+            setIsQa(idProduct === user.favoriteList[0].idProduct);
+            getQualificationByProductId(idProduct);
+        } else {
+            // Manejar el caso cuando no haya productos favoritos
+            setIsQa(false); // O cualquier valor por defecto
+        }
+    }, [idProduct, user.favoriteList]); 
     
 
     return (

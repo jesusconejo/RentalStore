@@ -1,0 +1,15 @@
+#main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#productos{
+    width:min-content;
+}
+#calculate{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    font-size: large;
+}

@@ -1,6 +1,6 @@
 import { NavBar } from "./NavBar"
 import './Header.css'
-import { NavLink, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 export const Header = () => {
@@ -16,6 +16,9 @@ export const Header = () => {
     Swal.fire("¡Sesión Cerrada Correcatmente!");
     logout();
     navigate('/Inicio');
+  }
+  const carrito = ()=>{
+    navigate('/BuyCar')
   }
 
 
@@ -37,7 +40,7 @@ export const Header = () => {
                 className="nav-link-custom">{textAvatar(user.name, user.lastName)}
               </NavLink>
               <button className="btn btn-primary" onClick={close}>Cerrar Sesión</button>
-              <button className="cart-button" >
+              <button className="cart-button" onClick={carrito}>
                 <img className="cart-icon"
                   src="src/assets/cesta.png" alt="cesta" />
               </button>

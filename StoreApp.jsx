@@ -12,37 +12,41 @@ import { InfoUser } from "./src/pages/InfoUser";
 import { ProtectedRoute } from "./src/component/ProtectedRoute"
 import { AuthProvider } from './src/component/AuthProvider';
 import './StoreApp.css'
+import { BuyCar } from "./src/component/BuyCar";
+import { BuyCarProvider } from "./src/component/BuyCarProvider";
 
 export const StoreApp = () => {
   return (
     <AuthProvider>
-
-      <div className="container-header">
-        <Header />
-      </div>
-      <div className="container-fluid">
-        <div className="container-body">
-          <Routes>
-            <Route path='/Productos' element={<Productos />}></Route>
-            <Route path='/Login' element={<Login />}></Route>
-            <Route path='/CreateAcount' element={<CreateAcount />}></Route>
-            <Route
-              path='/Admin'
-              element={
-                <ProtectedRoute roles={['admin','manager']}>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-            <Route path='/Inicio' element={<Inicio />}></Route>
-            <Route path='/' element={<Inicio />}></Route>
-            <Route path='/InfoUser' element={<InfoUser></InfoUser>}></Route>
-          </Routes>
+      <BuyCarProvider>
+        <div className="container-header">
+          <Header />
         </div>
-      </div>
-      <div className="container-footer">
-        <Footer />
-      </div>
+        <div className="container-fluid">
+          <div className="container-body">
+            <Routes>
+              <Route path='/Productos' element={<Productos />}></Route>
+              <Route path='/Login' element={<Login />}></Route>
+              <Route path='/CreateAcount' element={<CreateAcount />}></Route>
+              <Route path='/BuyCar' element={<BuyCar />}></Route>
+              <Route
+                path='/Admin'
+                element={
+                  <ProtectedRoute roles={['admin', 'manager']}>
+                    <Admin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path='/Inicio' element={<Inicio />}></Route>
+              <Route path='/' element={<Inicio />}></Route>
+              <Route path='/InfoUser' element={<InfoUser></InfoUser>}></Route>
+            </Routes>
+          </div>
+        </div>
+        <div className="container-footer">
+          <Footer />
+        </div>
+      </BuyCarProvider>
     </AuthProvider>
   );
 }
